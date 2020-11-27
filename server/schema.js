@@ -38,9 +38,9 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    SaveRecord(recordId: ID!): RecordUpdateResponse!
+    saveRecord(recordId: ID!): RecordUpdateResponse!
     deleteRecord(recordId: ID!): RecordUpdateResponse!
-    login(email: String): User
+    login(email: String): String
   }
 
   type RecordUpdateResponse {

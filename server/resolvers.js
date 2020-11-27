@@ -27,5 +27,23 @@ module.exports = {
       users: (_, __, { dataSources }) =>
       dataSources.UserAPI.getUsers()
       //me: (_, __, { dataSources }) => dataSources.userAPI.findOrCreateUser()
+    },
+    Mutation: {
+      login: async (_, { email }, { dataSources }) => {
+        const user = await dataSources.UserAPI.getUser({ email });
+        if (user) {
+          user.token = new Buffer(email).toString('base64');
+          return user;
+        }
+      },
+      saveRecord: async (_, { recordId }, { dataSources }) => {
+        const results = await dataSources.UserAPI.saveRecord({recordId});
+
+        return {
+          success: results.length ? true : false,
+          message: results.length ? "Quake data successfully saved" : "Quake data NOT saved",
+          records: results
+        }
+      }
     }
   };
